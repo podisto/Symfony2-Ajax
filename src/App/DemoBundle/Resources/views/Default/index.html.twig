@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Formulaire ajout institut</h2>
+                <hr>
+                <form action="#" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        {{ form_row(form.nom) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.adresse) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.region, {'attr' : {'onChange' : 'remplirVille();'} }) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.ville) }}
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Enregistrer" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function remplirVille() {
+            var idRegion = $('#app_demobundle_institut_region').val();
+            //alert(idRegion);
+            $.ajax({
+                type: 'POST',
+                url: "http://symfony.local/web/app_dev.php/remplirVille",
+                data: {'idReg' : idRegion},
+                dataType: 'json',
+                success: function (msg) {
+                    $('#app_demobundle_institut_ville').html('');
+                    $.each(msg, function(index, value) {
+                       $('#app_demobundle_institut_ville').append('<option value="'+ value.id +'">'+ value.nom +'</option>');
+                    });
+                }
+            });
+        }
+    </script>
+{% endblock %}

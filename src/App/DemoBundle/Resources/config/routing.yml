@@ -1,0 +1,8 @@
+accueil:
+    path:     /
+    defaults: { _controller: DemoBundle:Demo:index }
+
+remplir_ville:
+    path: /remplirVille
+    defaults: { _controller: DemoBundle:Demo:remplirVille, format: json }
+    methods: [POST]
